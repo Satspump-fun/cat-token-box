@@ -35,7 +35,10 @@ module.exports = {
 
         const wallet = await cat20.wallet_get(name)
 
-        ctx.body = succ(wallet)
+        const { address, address_type } = wallet
+        ctx.body = succ({
+            address, address_type
+        })
     },
     /**
      * 
