@@ -14,7 +14,8 @@
   },
   "scripts": {
     "build": "turbo build",
-    "postinstall": "sh ./scripts/patch.sh"
+    "postinstall": "sh ./scripts/patch.sh",
+    "server": "node ./packages/server/server.js"
   },
   "devDependencies": {
     "turbo": "^2.1.1"
