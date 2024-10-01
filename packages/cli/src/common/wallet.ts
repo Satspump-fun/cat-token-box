@@ -7,5 +7,7 @@ export interface Wallet {
   name: string;
   accountPath: string;
   addressType?: AddressType;
+  address?: string;
   mnemonic: string;
+  wif?: string;
 }

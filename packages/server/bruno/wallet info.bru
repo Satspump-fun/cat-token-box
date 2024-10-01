@@ -1,0 +1,17 @@
+meta {
+  name: wallet info
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{host}}/wallet/info
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "otools"
+  }
+}

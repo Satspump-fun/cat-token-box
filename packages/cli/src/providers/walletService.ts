@@ -55,9 +55,9 @@ export class WalletService {
     }
   }
 
-  loadWallet(): Wallet | null {
+  loadWallet(name: string): Wallet | null {
     const dataDir = this.configService.getDataDir();
-    const walletFile = join(dataDir, 'wallet.json');
+    const walletFile = join(dataDir, '/keys/' + name + '.json');
     let walletString = null;
 
     try {
@@ -218,9 +218,9 @@ export class WalletService {
     }
   }
 
-  createWallet(wallet: Wallet): Error | null {
+  createWallet(name: string, wallet: Wallet): Error | null {
     const dataDir = this.configService.getDataDir();
-    const walletFile = join(dataDir, 'wallet.json');
+    const walletFile = join(dataDir, '/keys/' + name + '.json');
     try {
       writeFileSync(walletFile, JSON.stringify(wallet, null, 2));
       this.wallet = wallet;
@@ -256,9 +256,22 @@ export class WalletService {
     return true;
   }
 
-  foundWallet(): string | null {
+  queryWallet(name: string): Wallet | null {
     const dataDir = this.configService.getDataDir();
-    const walletFile = join(dataDir, 'wallet.json');
+    const walletFile = join(dataDir, '/keys/' + name + '.json');
+    let walletString = null;
+
+    try {
+      walletString = readFileSync(walletFile).toString();
+      return JSON.parse(walletString);
+    } catch (error) {}
+
+    return null;
+  }
+
+  foundWallet(name: string): string | null {
+    const dataDir = this.configService.getDataDir();
+    const walletFile = join(dataDir, '/keys/' + name + '.json');
     let walletString = null;
 
     try {

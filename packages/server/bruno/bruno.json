@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "cat20pumpfun",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}

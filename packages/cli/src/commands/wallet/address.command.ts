@@ -1,10 +1,11 @@
 import { SubCommand } from 'nest-commander';
-import { log, logerror } from 'src/common';
+import { log, logerror, Wallet, AddressType } from 'src/common';
 import { BaseCommand, BaseCommandOptions } from '../base.command';
 import { ConfigService, WalletService } from 'src/providers';
 import { Inject } from '@nestjs/common';
 
-interface AddressCommandOptions extends BaseCommandOptions {}
+interface AddressCommandOptions extends BaseCommandOptions {
+}
 
 @SubCommand({
   name: 'address',
@@ -27,9 +28,20 @@ export class AddressCommand extends BaseCommand {
     try {
       const address = this.walletService.getAddress();
 
+      const wallet: Wallet = this.walletService.queryWallet(options.name);
+
+      const wif = this.walletService.getWif()
+
+      wallet['addressType'] = AddressType.P2TR
+      wallet['address'] = `${address}`
+      wallet['wif'] = `${wif}`
+  
+      this.walletService.createWallet(options.name, wallet);
+      
       log(`Your address is ${address}`);
     } catch (error) {
       logerror('Get address failed!', error);
     }
   }
+
 }

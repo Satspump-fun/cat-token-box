@@ -12,6 +12,7 @@ export interface BaseCommandOptions {
   rpcurl?: string;
   rpcusername?: string;
   rpcpassword?: string;
+  name?: string;
 }
 
 export abstract class BaseCommand extends CommandRunner {
@@ -45,7 +46,13 @@ export abstract class BaseCommand extends CommandRunner {
     this.configService.mergeCliConfig(cliConfig);
 
     if (this.autoLoadWallet) {
-      const wallet = this.walletService.loadWallet();
+      const name = options.name 
+      if( !name ) {
+        console.log(`wallet name can't be empty!`);
+        return 
+      }
+
+      const wallet = this.walletService.loadWallet(name);
 
       if (wallet === null) {
         return;
@@ -195,6 +202,19 @@ export abstract class BaseCommand extends CommandRunner {
     description: 'Special a rpc password',
   })
   parseRpcPassword(val: string): string {
+    return val;
+  }
+
+  @Option({
+    flags: '-n,--name [name]',
+    description: 'wallet name',
+  })
+  parseName(val: string): string {
+    if (!val) {
+      logerror("wallet name can't be empty!", new Error('invalid name option'));
+      process.exit(0);
+    }
+
     return val;
   }
 }

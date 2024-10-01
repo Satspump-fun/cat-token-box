@@ -207,6 +207,12 @@ export const rpc_listunspent = async function (
     `${config.getRpcUser()}:${config.getRpcPassword()}`,
   ).toString('base64')}`;
 
+  console.log( config.getRpcUrl(walletName) , Authorization , JSON.stringify({
+    jsonrpc: '2.0',
+    id: 'cat-cli',
+    method: 'listunspent',
+    params: [0, 9999999, [address]],
+  }) );
   return fetch(config.getRpcUrl(walletName), {
     method: 'POST',
     headers: {
@@ -248,6 +254,52 @@ export const rpc_listunspent = async function (
       return e;
     });
 };
+
+export const rpc_listunspent_unisat = async function (
+  config: ConfigService,
+  walletName: string,
+  address: string,
+): Promise<UTXO[] | Error> {
+  return fetch(`https://wallet-api-fractal-testnet.unisat.io/v5/address/btc-utxo?address=${address}`, {
+    "method": "GET",
+    "headers": {
+      "accept": "*/*",
+      "accept-language": "en,zh;q=0.9,zh-CN;q=0.8",
+      "cache-control": "no-cache",
+      "pragma": "no-cache",
+      "priority": "u=1, i",
+      "sec-fetch-dest": "empty",
+      "sec-fetch-mode": "cors",
+      "sec-fetch-site": "none",
+      "x-address": `${address}`,
+      "x-channel": "store",
+      "x-client": "UniSat Wallet",
+      "x-flag": "0",
+      "x-udid": "inm6fHaXAJnh",
+      "x-version": "1.4.8"
+    },
+    "referrerPolicy": "strict-origin-when-cross-origin",
+    "body": null,
+  }).then( res => {
+    if (res.status === 200) {
+      return res.json();
+    }
+    throw new Error(res.statusText);
+  }).then( ( res: any ) => {
+    const utxos: UTXO[] = res.data.map((item: any) => {
+      return {
+        txId: item.txid,
+        outputIndex: item.vout,
+        script: item.scriptPk,
+        satoshis: item.satoshis,
+      } as UTXO;
+    })
+
+    return utxos
+  }).catch( (e:Error) => {
+    return e
+  })
+}
 
 export const rpc_create_watchonly_wallet = async function (
   config: ConfigService,

@@ -29,15 +29,18 @@ export class CreateCommand extends BaseCommand {
     options?: CreateCommandOptions,
   ): Promise<void> {
     try {
-      const walletFile = this.walletService.foundWallet();
+      const name = options.name 
+      if( !name ) {
+        console.log(`wallet name can't be empty!`);
+        return 
+      }
+
+      const walletFile = this.walletService.foundWallet(name);
+
       if (walletFile !== null) {
         logerror(`found an existing wallet: ${walletFile}`, new Error());
         return;
       }
-
-      const name = options.name
-        ? options.name
-        : `cat-${randomBytes(4).toString('hex')}`;
 
       const wallet: Wallet = {
         accountPath: "m/86'/0'/0'/0/0",
@@ -45,7 +48,7 @@ export class CreateCommand extends BaseCommand {
         mnemonic: bip39.generateMnemonic(),
       };
 
-      this.walletService.createWallet(wallet);
+      this.walletService.createWallet(name, wallet);
 
       console.log('Your wallet mnemonic is: ', wallet.mnemonic);
 

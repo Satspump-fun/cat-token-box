@@ -1,0 +1,22 @@
+meta {
+  name: deploy_cat20
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{host}}/cat20/deploy
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "otools",
+    "symbol": "OTT",
+    "decimals": 2,
+    "max": "21000000",
+    "limit": "21000000",
+    "premine": "21000000"
+  }
+}

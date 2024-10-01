@@ -7,6 +7,7 @@ import {
   rpc_getfeeRate,
   rpc_getrawtransaction,
   rpc_listunspent,
+  rpc_listunspent_unisat,
 } from './apis-rpc';
 import { logerror, logwarn } from './log';
 import { btc } from './btc';
@@ -101,7 +102,7 @@ export const getUtxos = async function (
   address: btc.Address,
 ): Promise<UTXO[]> {
   if (config.useRpc()) {
-    const utxos = await rpc_listunspent(
+    const utxos = await rpc_listunspent_unisat(
       config,
       wallet.getWalletName(),
       address.toString(),

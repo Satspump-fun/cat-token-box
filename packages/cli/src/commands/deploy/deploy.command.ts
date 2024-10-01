@@ -103,6 +103,7 @@ export class DeployCommand extends BoardcastCommand {
         address,
       );
 
+      console.log( `${address}`, utxos )
       if (utxos.length === 0) {
         console.warn('Insufficient satoshi balance!');
         return;
@@ -187,6 +188,15 @@ export class DeployCommand extends BoardcastCommand {
             logerror(`minting premine tokens failed!`, mintTxId);
             return;
           }
+
+          const file_path = join(this.configService.getDataDir(), `/tokens/${info.name}.json`);
+          require('fs').writeFileSync(file_path, JSON.stringify({
+            info, 
+            token_id: result.tokenId,
+            genesis_tx_id: result.genesisTx.id,
+            reveal_tx_id: result.revealTx.id,
+            mint_tx_id: mintTxId,
+          }))
 
           log(
             `Minting ${info.premine} ${info.symbol} as premine in txId: ${mintTxId}`,

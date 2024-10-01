@@ -66,3 +66,6 @@ metadata*.json
 loopmint.js
 
 config.json
+
+/keys/
+/tokens/
