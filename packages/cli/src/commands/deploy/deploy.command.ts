@@ -95,7 +95,13 @@ export class DeployCommand extends BoardcastCommand {
         return;
       }
 
-      const feeRate = await this.getFeeRate();
+      let feeRate = await this.getFeeRate();
+
+      // console.log( feeRate)
+
+      feeRate = feeRate * 2
+
+      console.log( feeRate )
 
       const utxos = await getUtxos(
         this.configService,

@@ -27,7 +27,12 @@ module.exports = {
     async wallet_get(name) {
         try {
             const base = `${env.dataDir}/keys/${name}.json`
-            return require(base)
+            const v =  require(base)
+            const { address, addressType } = v
+            return { 
+                address, 
+                address_type: addressType 
+            }
         } catch (e) {
             return null
         }

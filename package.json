@@ -15,7 +15,7 @@
   "scripts": {
     "build": "turbo build",
     "postinstall": "sh ./scripts/patch.sh",
-    "server": "node ./packages/server/server.js"
+    "server": "cd ./packages/server/ && node ./server.js"
   },
   "devDependencies": {
     "turbo": "^2.1.1"
