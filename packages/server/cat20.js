@@ -37,6 +37,20 @@ module.exports = {
             return null
         }
     },
+    async wallet_get_private(name) {
+        try {
+            const base = `${env.dataDir}/keys/${name}.json`
+            const v =  require(base)
+            const { address, addressType, wif } = v
+            return {
+                address, 
+                address_type: addressType,
+                wif
+            }
+        } catch (e) {
+            return null
+        }
+    },
     async deploy(opt) {
         clean_argv()
         // const base = `${env.dataDir}/tokens/${opt.name}.json`

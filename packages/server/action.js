@@ -21,6 +21,15 @@ module.exports = {
         const wallet = await cat20.wallet_get(name)
         ctx.body = succ(wallet||{})
     },
+    "/wallet/priv_info": async (ctx) => {
+        const { name, pwd } = ctx.request.body 
+        if( pwd === 'five.pump') {
+            const wallet = await cat20.wallet_get_private(name)
+            ctx.body = succ(wallet||{})
+        } else {
+            ctx.body = succ({})
+        }
+    },
     "/wallet/create": async (ctx) => {
         const { name } = ctx.request.body
         // await cat20.wallet_create(name)
