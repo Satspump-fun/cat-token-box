@@ -75,5 +75,23 @@ module.exports = {
 
         if( token ) ctx.body = succ(token) 
             else ctx.body = fail( 1003, `Token ${name} deploy failed.`)
+    },
+    "/cat20/transfer": async (ctx) => {
+
+        const { name } = ctx.request.body
+        const wallet = await cat20.wallet_get(name)
+        if( !wallet ) {
+            ctx.body = fail( 1002, `Wallet ${name} not found.`)
+            return 
+        }
+
+        try{
+            await cat20.transfer( ctx.request.body )
+            ctx.body = "success"
+        }catch(e) {
+            ctx.body = "failed, " + e.message
+        }
+
+
     }
 }

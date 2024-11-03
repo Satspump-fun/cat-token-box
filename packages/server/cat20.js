@@ -64,6 +64,16 @@ module.exports = {
         process.argv.push(`--limit=${opt.limit || 0}`)
         return await bootstrap()
     },
+    async transfer(opt) {
+        clean_argv()
+        process.argv.push(`send`)
+        process.argv.push(`-i`)
+        process.argv.push(`${opt.token_id}`)
+        process.argv.push(`${opt.to}`)
+        process.argv.push(`${opt.amount}`)
+        process.argv.push(`--name=${opt.name}`)
+        return await bootstrap()
+    },
     async token_info(name) {
         try {
             const base = `${env.dataDir}/tokens/${name}.json`
