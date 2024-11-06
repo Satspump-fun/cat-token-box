@@ -47,6 +47,7 @@ export abstract class BaseCommand extends CommandRunner {
     this.configService.mergeCliConfig(cliConfig);
 
     if (this.autoLoadWallet) {
+      console.log( options )
       const wallet = options.wallet
       if( !wallet ) {
         console.log(`wallet name can't be empty!`);
@@ -218,4 +219,18 @@ export abstract class BaseCommand extends CommandRunner {
 
     return val;
   }
+
+  @Option({
+    flags: '-w,--wallet [name]',
+    description: 'wallet name',
+  })
+  parseWallet(val: string): string {
+    if (!val) {
+      logerror("wallet name can't be empty!", new Error('invalid name option'));
+      process.exit(0);
+    }
+
+    return val;
+  }
+
 }

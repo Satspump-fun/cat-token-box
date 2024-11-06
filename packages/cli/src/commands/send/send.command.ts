@@ -48,12 +48,14 @@ export class SendCommand extends BoardcastCommand {
     inputs: string[],
     options?: SendCommandOptions,
   ): Promise<void> {
+    console.log( options )
     if (!options.id) {
       logerror('expect a tokenId option', new Error());
       return;
     }
     try {
       const address = this.walletService.getAddress();
+      console.log( `wallet address:`, address )
       const token = await findTokenMetadataById(this.configService, options.id);
 
       if (!token) {
@@ -62,6 +64,7 @@ export class SendCommand extends BoardcastCommand {
 
       let receiver: btc.Address;
       let amount: bigint;
+      console.log( `info:`, receiver, amount )
       try {
         receiver = btc.Address.fromString(inputs[0]);
 

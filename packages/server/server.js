@@ -35,4 +35,8 @@ app.use( async (ctx) => {
 })
 
 console.log(`Start cat20 server at ${env.port}`)
-app.listen(env.port)
+try {
+    app.listen(env.port)
+}catch(e) {
+    console.log(`app: `, e )
+}

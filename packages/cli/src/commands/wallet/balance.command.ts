@@ -51,6 +51,8 @@ export class BalanceCommand extends BaseCommand {
     try {
       const address = this.walletService.getAddress();
 
+      console.log(`Query balance: `, address.toString() )
+
       if (options.id) {
         const metadata = await findTokenMetadataById(
           this.configService,

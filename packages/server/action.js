@@ -62,7 +62,7 @@ module.exports = {
         }
      */
     "/cat20/deploy": async (ctx) => {
-        const { wallet } = ctx.request.body
+        const { wallet, name } = ctx.request.body
         const v = await cat20.wallet_get(wallet)
         if( !v ) {
             ctx.body = fail( 1002, `Wallet ${wallet} not found.`)
@@ -71,10 +71,10 @@ module.exports = {
 
         await cat20.deploy( ctx.request.body )
 
-        const token = await cat20.token_info(name)
+        const token = await cat20.token_info(`${wallet}_${name}`)
 
         if( token ) ctx.body = succ(token) 
-            else ctx.body = fail( 1003, `Token ${name} deploy failed.`)
+            else ctx.body = fail( 1003, `${wallet} ,Token ${name} deploy failed.`)
     },
     "/cat20/transfer": async (ctx) => {
 
