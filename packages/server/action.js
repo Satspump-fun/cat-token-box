@@ -44,6 +44,11 @@ module.exports = {
 
         const wallet = await cat20.wallet_get(name)
 
+        if( !wallet ) {
+            ctx.body = fail( 1002, `Wallet ${name} not found.`)
+            return 
+        }
+
         const { address, address_type } = wallet
         ctx.body = succ({
             address, address_type

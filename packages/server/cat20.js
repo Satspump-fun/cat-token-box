@@ -72,7 +72,7 @@ module.exports = {
         process.argv.push(`${opt.token_id} ${opt.to} ${opt.amount}`)
         // process.argv.push(``)
         // process.argv.push(``)
-        process.argv.push(`--name=${opt.name}`)
+        process.argv.push(`--wallet=${opt.name}`)
         return await bootstrap()
     },
     async token_info(wallet, name) {

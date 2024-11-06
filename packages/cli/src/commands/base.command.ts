@@ -47,8 +47,7 @@ export abstract class BaseCommand extends CommandRunner {
     this.configService.mergeCliConfig(cliConfig);
 
     if (this.autoLoadWallet) {
-      console.log( options )
-      const wallet = options.wallet
+      const wallet = options.wallet || options.name 
       if( !wallet ) {
         console.log(`wallet name can't be empty!`);
         return 
