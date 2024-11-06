@@ -62,10 +62,10 @@ module.exports = {
         }
      */
     "/cat20/deploy": async (ctx) => {
-        const { name } = ctx.request.body
-        const wallet = await cat20.wallet_get(name)
-        if( !wallet ) {
-            ctx.body = fail( 1002, `Wallet ${name} not found.`)
+        const { wallet } = ctx.request.body
+        const v = await cat20.wallet_get(wallet)
+        if( !v ) {
+            ctx.body = fail( 1002, `Wallet ${wallet} not found.`)
             return 
         }
 

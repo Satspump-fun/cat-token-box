@@ -101,8 +101,6 @@ export class DeployCommand extends BoardcastCommand {
 
       feeRate = feeRate * 2
 
-      console.log( feeRate )
-
       const utxos = await getUtxos(
         this.configService,
         this.walletService,
@@ -195,7 +193,7 @@ export class DeployCommand extends BoardcastCommand {
             return;
           }
 
-          const file_path = join(this.configService.getDataDir(), `/tokens/${info.name}.json`);
+          const file_path = join(this.configService.getDataDir(), `/tokens/${options.wallet}_${info.name}.json`);
           require('fs').writeFileSync(file_path, JSON.stringify({
             info, 
             token_id: result.tokenId,

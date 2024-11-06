@@ -56,6 +56,7 @@ module.exports = {
         // const base = `${env.dataDir}/tokens/${opt.name}.json`
         // require('fs').writeFileSync(base, JSON.stringify(opt))
         process.argv.push(`deploy`)
+        process.argv.push(`--wallet=${opt.wallet}`)
         process.argv.push(`--name=${opt.name}`)
         process.argv.push(`--symbol=${opt.symbol}`)
         process.argv.push(`--decimals=${opt.decimals}`)
@@ -68,18 +69,23 @@ module.exports = {
         clean_argv()
         process.argv.push(`send`)
         process.argv.push(`-i`)
-        process.argv.push(`${opt.token_id}`)
-        process.argv.push(`${opt.to}`)
-        process.argv.push(`${opt.amount}`)
+        process.argv.push(`${opt.token_id} ${opt.to} ${opt.amount}`)
+        // process.argv.push(``)
+        // process.argv.push(``)
         process.argv.push(`--name=${opt.name}`)
         return await bootstrap()
     },
-    async token_info(name) {
+    async token_info(wallet, name) {
         try {
-            const base = `${env.dataDir}/tokens/${name}.json`
+            const base = `${env.dataDir}/tokens/${wallet}_${name}.json`
             return require(base)
         } catch (e) {
             return null
         }
+    },
+    async cat20_balance() {
+        clean_argv()
+        process.argv.push(`wallet balance`)
+        return await bootstrap()
     }
 }
