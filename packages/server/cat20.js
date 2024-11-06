@@ -75,9 +75,9 @@ module.exports = {
         process.argv.push(`--wallet=${opt.name}`)
         return await bootstrap()
     },
-    async token_info(wallet, name) {
+    async token_info(name) {
         try {
-            const base = `${env.dataDir}/tokens/${wallet}_${name}.json`
+            const base = `${env.dataDir}/tokens/${name}.json`
             return require(base)
         } catch (e) {
             return null
