@@ -260,7 +260,7 @@ export const rpc_listunspent_unisat = async function (
   walletName: string,
   address: string,
 ): Promise<UTXO[] | Error> {
-  return fetch(`https://wallet-api-fractal-testnet.unisat.io/v5/address/btc-utxo?address=${address}`, {
+  return fetch(`https://wallet-api-fractal.unisat.io/v5/address/btc-utxo?address=${address}`, {
     "method": "GET",
     "headers": {
       "accept": "*/*",
