@@ -39,8 +39,14 @@ module.exports = {
             return 
         }
 
-        await cat20.wallet_create(name)
-        await cat20.wallet_address(name)
+        try{
+            await cat20.wallet_create(name)
+        }catch(e) {
+        }
+        try{
+            await cat20.wallet_address(name)
+        }catch(e) {
+        }
 
         const wallet = await cat20.wallet_get(name)
 
